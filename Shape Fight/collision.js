@@ -20,21 +20,40 @@ export default function collision(oneX, oneY, oneRad, oneName, twoX, twoY, twoRa
             y: oneY - Math.sin(shieldAng) * oneRad
         };
 
+        const center = {
+            x: oneX,
+            y: oneY - oneRad / 2
+        };
 
         const rectOne = {
-            x: (vertOne.x + 2 * oneRad) * Math.cos(shieldAng) - (vertOne.y - oneRad) * Math.sin(shieldAng),
-            y: (vertOne.x + 2 * oneRad) * Math.sin(shieldAng) + (vertOne.y - oneRad) * Math.cos(shieldAng),
+            get x() {
+                let v1UnrotatedX = (((vertOne.x - center.x) * Math.cos(Math.PI / 2) - (vertOne.y - center.y) * Math.sin(Math.PI / 2)) + center.x);
+                let v1UnrotatedY = (((vertOne.x - center.x) * Math.sin(Math.PI / 2) + (vertOne.y - center.y) * Math.cos(Math.PI / 2)) + center.y);
+                let x = v1UnrotatedX + 2 * oneRad;
+                let y = v1UnrotatedY + oneRad;
+                return (((x - center.x) * Math.cos(shieldAng) - (y - center.y) * Math.sin(shieldAng)) + center.x);
+            }, 
+
+            get y() {
+                let v1UnrotatedX = (((vertOne.x - center.x) * Math.cos(Math.PI / 2) - (vertOne.y - center.y) * Math.sin(Math.PI / 2)) + center.x);
+                let v1UnrotatedY = (((vertOne.x - center.x) * Math.sin(Math.PI / 2) + (vertOne.y - center.y) * Math.cos(Math.PI / 2)) + center.y);
+                let x = v1UnrotatedX + 2 * oneRad;
+                let y = v1UnrotatedY + oneRad;
+                ctx.strokeStyle = 'blue';
+                ctx.strokeRect(v1UnrotatedX - 10, v1UnrotatedY - 10, 20, 20);
+                return (((x - center.x) * Math.sin(shieldAng) + (y - center.y) * Math.cos(shieldAng)) + center.y);
+            },
+
             width: 2 * oneRad,
             height: oneRad
         };
-        console.log(rectOne.x, rectOne.y);
+
 
         // draws rectOne
         ctx.strokeStyle = 'red';
         ctx.strokeRect(rectOne.x - 10, rectOne.y - 10, 20, 20);
         ctx.strokeStyle = 'green';
         ctx.strokeRect(vertOne.x - 10, vertOne.y - 10, 20, 20);
-
         // Checks for the type of enemy and finds the top left x and y point
         let rectTwo;
         if (twoName === 'square' || twoName === 'bullet') {
