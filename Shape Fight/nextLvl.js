@@ -18,7 +18,7 @@ export default function nextLvl(arr, ship, lvl) {
         else if (rand <= 95)
             arr.push(new EnemyPent(ship.radius, 0.008 + (lvl * 0.001)));
         else 
-            arr.push(new EnemyOct(ship.radius, 0.005 + (lvl * 0.001)))
+            arr.push(new EnemyOct(ship.radius, 0.005 + (lvl * 0.001)));
     }
     return arr;
 }
