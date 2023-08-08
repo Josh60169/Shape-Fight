@@ -3,7 +3,7 @@ import Ship from './ship.js';
 import Bullet from './bullet.js';
 import nextLvl from './nextLvl.js';
 import Shield from './shield.js';
-import collision from './collision.js';
+import {collision, rotate} from './collision.js';
 import gameOver from './gameOver.js';
 import destroy from './destroyAnim.js';
 
@@ -62,7 +62,9 @@ function bulletExpired(arr, expDate) {
     return arr;
 }
 
-// Renders the game 
+
+console.log(collision(942, 427, 50, 'shield', 890, 426, 15, 'square', 2.85));
+
 function gameLoop() {
     // Clears screen
     ctx.fillStyle = "black"
@@ -149,6 +151,7 @@ function gameLoop() {
                 ship.x = canvWidth / 2;
                 ship.y = canvHeight / 2;
             } 
+            console.log(shield.cx, shield.cy, shield.radius, shield.name, enemyArr[p].x, enemyArr[p].y, enemyArr[p].radius, enemyArr[p].name, shield.angle);
         }
     }
     
