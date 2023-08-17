@@ -3,7 +3,7 @@ import Ship from './ship.js';
 import Bullet from './bullet.js';
 import nextLvl from './nextLvl.js';
 import Shield from './shield.js';
-import {collision, rotate} from './collision.js';
+import {collision} from './collision.js';
 import gameOver from './gameOver.js';
 import destroy from './destroyAnim.js';
 
@@ -151,7 +151,6 @@ function gameLoop() {
                 ship.x = canvWidth / 2;
                 ship.y = canvHeight / 2;
             } 
-            console.log(shield.cx, shield.cy, shield.radius, shield.name, enemyArr[p].x, enemyArr[p].y, enemyArr[p].radius, enemyArr[p].name, shield.angle);
         }
     }
     

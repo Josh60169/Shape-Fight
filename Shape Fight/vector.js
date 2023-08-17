@@ -15,7 +15,12 @@ export default class Vector {
         ctx.stroke();
     }
 
-    dot(v1x, v2x, v1y, v2y) {
-        return [v1x * v2x, v1y * v2y];
+    dot(vx, vy) {
+        return this.x * vx + this.y * vy;
+    }
+
+    unit() {
+        let mag = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+        return {x: this.x / mag, y: this.y / mag};
     }
 }
