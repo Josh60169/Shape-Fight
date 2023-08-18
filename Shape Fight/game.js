@@ -6,6 +6,7 @@ import Shield from './shield.js';
 import {collision} from './collision.js';
 import gameOver from './gameOver.js';
 import destroy from './destroyAnim.js';
+import spawnpoint from './spawnpoint.js';
 
 // Creates ship, arrays for bullets, and mouse
 let lives = 3;
@@ -62,9 +63,6 @@ function bulletExpired(arr, expDate) {
     return arr;
 }
 
-
-console.log(collision(942, 427, 50, 'shield', 890, 426, 15, 'square', 2.85));
-
 function gameLoop() {
     // Clears screen
     ctx.fillStyle = "black"
@@ -86,10 +84,21 @@ function gameLoop() {
         
         // Updates player's bullet
         if (bulletArr.length !== 0) {
+            loop4:
             for (let i = 0; i < bulletArr.length; i++) {
                 bulletArr[i].update();
                 bulletArr[i].draw();
+                
+                for (let j = 0; j < enemyArr.length; j++) {
+                    if (collision(bulletArr[i].x, bulletArr[i].y, bulletArr[i].radius, 'bullet', enemyArr[j].x, enemyArr[j].y, enemyArr[j].radius, enemyArr[j].name, shield.angle)) {
+                        particleArr = destroy(enemyArr[j].x, enemyArr[j].y, 5, particleArr);
+                        enemyArr.splice(j, 1);
+                        bulletArr.splice(i, 1);
+                        break loop4;
+                    }
+                }
             }
+
             bulletExpired(bulletArr, 125);
         }
 
@@ -98,6 +107,17 @@ function gameLoop() {
             for (let j = 0; j < squareBullArr.length; j++) {
                 squareBullArr[j].update();
                 squareBullArr[j].draw();
+                
+                if (collision(squareBullArr[j].x, squareBullArr[j].y, squareBullArr[j].radius, 'bullet', ship.x, ship.y, ship.radius, ship.name, shield.angle)) {
+                    particleArr = destroy(ship.x, ship.y, 50, particleArr);
+                    lives--;
+
+                    if (lives === 0) 
+                        ship.visible = false;
+
+                    enemyArr = [];
+                    enemyArr = nextLvl(enemyArr, ship, level);
+                }
             }
             bulletExpired(squareBullArr, 250);
         }
@@ -107,6 +127,17 @@ function gameLoop() {
             for (let k = 0; k < pentBullArr.length; k++) {
                 pentBullArr[k].update();
                 pentBullArr[k].draw();
+
+                if (collision(pentBullArr[k].x, pentBullArr[k].y, pentBullArr[k].radius, 'bullet', ship.x, ship.y, ship.radius, ship.name, shield.angle)) {
+                    particleArr = destroy(ship.x, ship.y, 50, particleArr);
+                    lives--;
+
+                    if (lives === 0) 
+                        ship.visible = false;
+
+                    enemyArr = [];
+                    enemyArr = nextLvl(enemyArr, ship, level);
+                }
             }
             bulletExpired(pentBullArr, 2000);
         }
@@ -116,6 +147,17 @@ function gameLoop() {
             for (let l = 0; l < octBullArr.length; l++) {
                 octBullArr[l].update();
                 octBullArr[l].draw();
+
+                if (collision(octBullArr[l].x, octBullArr[l].y, octBullArr[l].radius, 'bullet', ship.x, ship.y, ship.radius, ship.name, shield.angle)) {
+                    particleArr = destroy(ship.x, ship.y, 50, particleArr);
+                    lives--;
+
+                    if (lives === 0) 
+                        ship.visible = false;
+
+                    enemyArr = [];
+                    enemyArr = nextLvl(enemyArr, ship, level);
+                }
             }
             bulletExpired(octBullArr, 800);
         }
@@ -138,18 +180,25 @@ function gameLoop() {
 
             // Tests for collision between the enemy and the shield and ship
             if (collision(shield.cx, shield.cy, shield.radius, shield.name, enemyArr[p].x, enemyArr[p].y, enemyArr[p].radius, enemyArr[p].name, shield.angle)) {
-                particleArr = destroy(enemyArr[p].x, enemyArr[p].y, 5, particleArr);
-                enemyArr.splice(p, 1);
+                if (Math.round(Math.random()) === 1) {
+                    // kill the enemy
+                    particleArr = destroy(enemyArr[p].x, enemyArr[p].y, 5, particleArr);
+                    enemyArr.splice(p, 1);
+                } else {
+                    [enemyArr[p].x, enemyArr[p].y] = spawnpoint(ship.radius)
+                }
                 break loop3;
+
             } else if (collision(ship.x, ship.y, ship.radius, ship.name, enemyArr[p].x, enemyArr[p].y, enemyArr[p].radius, enemyArr[p].name, shield.angle)) {
+
                 particleArr = destroy(ship.x, ship.y, 50, particleArr);
                 lives--;
 
                 if (lives === 0) 
                     ship.visible = false;
 
-                ship.x = canvWidth / 2;
-                ship.y = canvHeight / 2;
+                enemyArr = [];
+                enemyArr = nextLvl(enemyArr, ship, level);
             } 
         }
     }

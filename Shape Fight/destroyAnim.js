@@ -1,5 +1,4 @@
 import Particle from './explosionParticles.js';
-import { ctx } from './gameCanv.js';
 
 export default function destroy(cx, cy, numOfPar, arr) {
     for (let i = 0; i < numOfPar; i++)

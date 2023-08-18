@@ -27,7 +27,7 @@ export function collision(oneX, oneY, oneRad, oneName, twoX, twoY, twoRad, twoNa
 
         // Checks for the type of enemy and finds top left vertex, width, and height
         let enemyHitbox;
-        if (twoName === 'square' || twoName === 'bullet') {
+        if (twoName === 'square') {
             enemyHitbox = {
                 x: twoX,
                 y: twoY,
@@ -71,13 +71,25 @@ export function collision(oneX, oneY, oneRad, oneName, twoX, twoY, twoRad, twoNa
         // If all projections ovelap, there is a collision
         return true;
 
-    } else { // Checks for collision of ship
+    } else if (oneName === 'ship') { // Checks for collision of ship
         let distance = Math.sqrt(Math.pow((oneX - twoX), 2) + Math.pow((oneY - twoY), 2));
 
         // If there is a collision
         if (distance < oneRad + twoRad) 
             return true;
-    }
+
+    } else if (oneName === 'bullet' || twoName === 'bullet') {
+        let distance;
+        if (twoName === 'square') {
+            distance = Math.sqrt(Math.pow((oneX - twoX + twoRad / 2), 2) + Math.pow((oneY - twoY - twoRad / 2), 2));
+        } else {
+            distance = Math.sqrt(Math.pow((oneX - twoX), 2) + Math.pow((oneY - twoY), 2));
+        }
+            
+        // If there is a collision
+        if (distance < oneRad + twoRad) 
+            return true; 
+    } 
 
     // If it reaches this, there is no collision
     return false;

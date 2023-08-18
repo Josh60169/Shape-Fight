@@ -2,3 +2,10 @@
     background-color: #000;
     border: thin 10px white;
 }
+
+@font-face {
+    font-family: 'Press Start 2P';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Press Start 2P'), url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+}
