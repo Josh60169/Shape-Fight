@@ -4,11 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="shape.css">
     <script type="module" defer src="game.js"></script>
     <title>Shape Fight!</title>
 </head>
 <body>
-    <canvas id="gameCanvas"></canvas>
+    <div id="start-screen" style="display: block">
+        <h1 id="title">SHAPE FIGHT</h1>
+        <button id="start-button">Start</button>
+        <button id="how-to-play">How To Play</button>
+    </div>
+
+    <div id="instructions" style="display: none">
+        <p id="text-instructions">
+            Hello Player! <br><br>
+
+            In this game, you control a triangular ship that moves around and shoots enemy shapes. <br><br>
+            Your objective is to last as long as you can by killing as many enemy shapes as you can without getting shot 3 times. <br><br><br>
+            
+            - Use your mouse to point the ship in a given direction <br><br>
+            - Use W to move foward <br><br>
+            - Left click to shoot <br><br>
+            - Space bar to move the shield <br><br><br>
+
+            Good luck out there! Over and out.
+        </p>
+        <button id="back-btn">Back</button>
+    </div>
+
+    <canvas id="gameCanvas" style="display: none"></canvas>
 </body>
 </html>

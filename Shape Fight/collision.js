@@ -1,4 +1,5 @@
 import Vector from './vector.js';
+import {ctx} from './gameCanv.js';
 
 export function collision(oneX, oneY, oneRad, oneName, twoX, twoY, twoRad, twoName, shieldAng) {
      if (oneName === 'shield') { 
@@ -79,16 +80,32 @@ export function collision(oneX, oneY, oneRad, oneName, twoX, twoY, twoRad, twoNa
             return true;
 
     } else if (oneName === 'bullet' || twoName === 'bullet') {
-        let distance;
+        // Uses AABB to detect collision if enemy is square, and otherwise uses circle collision
         if (twoName === 'square') {
-            distance = Math.sqrt(Math.pow((oneX - twoX + twoRad / 2), 2) + Math.pow((oneY - twoY - twoRad / 2), 2));
+            const box1 = {
+                x: oneX - oneRad,
+                y: oneY - oneRad,
+                width: 2 * oneRad,
+                height: 2 * oneRad
+            };
+
+            const box2 = {
+                x: twoX,
+                y: twoY,
+                width: 2 * twoRad,
+                height: 2 * twoRad
+            };
+
+            if (box1.x < box2.x + box2.width && box1.x + box1.width > box2.x && box1.y < box2.y + box2.height && box1.y + box1.height > box2.y) 
+                return true;
+
         } else {
-            distance = Math.sqrt(Math.pow((oneX - twoX), 2) + Math.pow((oneY - twoY), 2));
+            let distance = Math.sqrt(Math.pow((oneX - twoX), 2) + Math.pow((oneY - twoY), 2));
+
+            // If there is a collision
+            if (distance < oneRad + twoRad) 
+                return true; 
         }
-            
-        // If there is a collision
-        if (distance < oneRad + twoRad) 
-            return true; 
     } 
 
     // If it reaches this, there is no collision

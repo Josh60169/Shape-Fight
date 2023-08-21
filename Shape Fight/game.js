@@ -20,6 +20,38 @@ let pentBullArr = [];
 let octBullArr = [];
 let particleArr = [];
 
+function startGame() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.visible = true;
+    toggleScreen('start-screen', false);
+    toggleScreen('gameCanvas', true);
+    gameLoop();
+}
+
+function toggleScreen(id, toggle) {
+    let element = document.getElementById(id);
+    let display = toggle ? 'block' : 'none';
+    element.style.display = display;
+}
+
+let startButton = document.getElementById('start-button');
+startButton.addEventListener("click", e => {
+    startGame();
+});
+
+let tutButton = document.getElementById('how-to-play');
+tutButton.addEventListener("click", e => {
+    toggleScreen('start-screen', false);
+    toggleScreen('instructions', true);
+});
+
+let backBtn = document.getElementById('back-btn');
+backBtn.addEventListener("click", e => {
+    toggleScreen('instructions', false);
+    toggleScreen('start-screen', true);
+});
+
 // Keeps track of mouse position
 const mouse = {
     x: undefined,
@@ -47,7 +79,7 @@ document.body.addEventListener('mousemove', e => {
 });
 
 // Fires bullet when left mouse button is clicked
-document.body.addEventListener('click', e => {
+canvas.addEventListener('click', e => {
     bulletArr.push(new Bullet(ship.noseX, ship.noseY, ship.angle, 5, 'orange', 5));
 });
 
@@ -222,4 +254,3 @@ function gameLoop() {
     if (lives !== 0 || particleArr.length !== 0)
         requestAnimationFrame(gameLoop);
 }
-gameLoop();
