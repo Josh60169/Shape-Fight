@@ -13,10 +13,10 @@ export default class EnemyPent {
         this.fireRate = Math.round(Math.random() * (1800 - 1500) + 1500);
     }
 
-    update(shipX, shipY) {
+    update(shipX, shipY, dt) {
         this.angle = Math.atan2(this.y - shipY, shipX - this.x);
-        this.x += Math.cos(this.angle) * this.radius * this.speed;
-        this.y -= Math.sin(this.angle) * this.radius * this.speed;
+        this.x += Math.cos(this.angle) * this.radius * this.speed * dt;
+        this.y -= Math.sin(this.angle) * this.radius * this.speed * dt;
         this.pointOne = []
         this.time++;
         this.name = 'pentagon';
@@ -49,7 +49,7 @@ export default class EnemyPent {
                 arr.push(
                     new Bullet(
                         this.x + Math.cos(this.angle + ptDis * j) * this.radius, 
-                        this.y - Math.sin(this.angle + ptDis * j) * this.radius, this.angle, 1.5, 'lightGreen', 8
+                        this.y - Math.sin(this.angle + ptDis * j) * this.radius, this.angle, 125 * 1.5, 'lightGreen', 8
                     )
                 );
             }

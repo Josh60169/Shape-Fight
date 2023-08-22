@@ -12,10 +12,10 @@ export default class Bullet {
         this.name = 'bullet';
     }
 
-    update() {
+    update(dt) {
         [this.x, this.y] = border(this.x, this.y, this.radius);
-        this.x += Math.cos(this.angle) * this.speed;
-        this.y -= Math.sin(this.angle) * this.speed;
+        this.x += Math.cos(this.angle) * this.speed * dt;
+        this.y -= Math.sin(this.angle) * this.speed * dt;
         this.time++;
     }
 

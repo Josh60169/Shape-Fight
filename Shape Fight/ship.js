@@ -6,7 +6,7 @@ export default class Ship {
         this.x = canvWidth / 2;
         this.y = canvHeight / 2;
         this.radius = 20;
-        this.speed = 2;
+        this.speed = 250;
         this.velX = 0;
         this.velY = 0;
         this.visible = true;
@@ -18,7 +18,7 @@ export default class Ship {
     }
 
     // Manages Controls and updates position of spaceship
-    update(mouseX, mouseY, keys) {
+    update(mouseX, mouseY, keys, dt) {
         [this.x, this.y] = border(this.x, this.y, this.radius);
         // If the mouse is not on top of the ship radius, point towards mouse pointer
         if (Math.abs(this.x - mouseX) > (this.radius - 6) && Math.abs(this.y - mouseY) > (this.radius - 6)) {
@@ -33,8 +33,8 @@ export default class Ship {
             this.velY *= 0.99;
         }
 
-        this.x += this.velX;
-        this.y -= this.velY;
+        this.x += this.velX * dt;
+        this.y -= this.velY * dt;
 
         this.noseX = this.x + Math.cos(this.angle) * this.radius;
         this.noseY = this.y - Math.sin(this.angle) * this.radius;

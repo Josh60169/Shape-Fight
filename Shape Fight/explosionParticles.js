@@ -6,18 +6,18 @@ export default class Particle {
         this.y = y;
         this.radius = 2;
         this.color = color;
-        this.speed = 2.5;
+        this.speed = 25 * 2.5;
         this.velX = Math.cos(this.angle) * this.speed;
         this.velY = Math.sin(this.angle) * this.speed;
         this.visible = true;
     }
 
-    update() {
+    update(dt) {
         this.velX *= 0.99;
         this.velY *= 0.99;
 
-        this.x += this.velX;
-        this.y -= this.velY;
+        this.x += this.velX * dt;
+        this.y -= this.velY * dt;
     }
 
     draw() {

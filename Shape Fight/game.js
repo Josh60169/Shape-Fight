@@ -7,6 +7,14 @@ import {collision} from './collision.js';
 import gameOver from './gameOver.js';
 import destroy from './destroyAnim.js';
 import spawnpoint from './spawnpoint.js';
+import deltaTime from './deltaTime.js';
+
+// Import font used
+// let eightBit = new FontFace('Press Start 2P', "url(https://fonts.gstatic.com/s/pressstart2p/v15/e3t4euO8T-267oIAQAu6jDQyK3nYivN04w.woff2)", format('woff2'));
+// eightBit.load().then((font) => {
+//     document.fonts.add(font);
+//     console.log("font loaded");
+// });
 
 // Creates ship, arrays for bullets, and mouse
 let lives = 3;
@@ -19,6 +27,9 @@ let squareBullArr = [];
 let pentBullArr = [];
 let octBullArr = [];
 let particleArr = [];
+let lastInterval = Date.now();
+let dt;
+let fps = 1000 / 60; 
 
 function startGame() {
     canvas.width = window.innerWidth;
@@ -52,6 +63,18 @@ backBtn.addEventListener("click", e => {
     toggleScreen('start-screen', true);
 });
 
+let creditsBtn = document.getElementById('credits-btn');
+creditsBtn.addEventListener("click", e => {
+    toggleScreen('start-screen', false);
+    toggleScreen('credits-screen', true);
+});
+
+let creditsBkBtn = document.getElementById('credits-back-btn');
+creditsBkBtn.addEventListener("click", e => {
+    toggleScreen('credits-screen', false);
+    toggleScreen('start-screen', true);
+});
+
 // Keeps track of mouse position
 const mouse = {
     x: undefined,
@@ -80,7 +103,7 @@ document.body.addEventListener('mousemove', e => {
 
 // Fires bullet when left mouse button is clicked
 canvas.addEventListener('click', e => {
-    bulletArr.push(new Bullet(ship.noseX, ship.noseY, ship.angle, 5, 'orange', 5));
+    bulletArr.push(new Bullet(ship.noseX, ship.noseY, ship.angle, 125 * 5, 'orange', 5));
 });
 
 // Expires bullet after a certain time
@@ -100,9 +123,32 @@ function gameLoop() {
     ctx.fillStyle = "black"
     ctx.fillRect(0, 0, canvWidth, canvHeight);    
 
+    // Calculate delta time
+    [lastInterval, dt] = deltaTime(lastInterval);
+    if (dt > fps) {
+        lastInterval -= (dt % fps);
+    } else if (dt < fps) {
+        lastInterval += (dt % fps);
+    }
+
+    // Updates explosion particles if there are any
+    if (particleArr.length !== 0) {
+        loop2:
+        for (let k = 0; k < particleArr.length; k++) {
+            particleArr[k].update(dt);
+
+            if (Math.round(particleArr[k].velX) === 0 && Math.round(particleArr[k].velY) === 0) {
+                particleArr.splice(k, 1);
+                break loop2;
+            }
+
+            particleArr[k].draw();
+        }
+    }
+
     if (ship.visible === true) {
         // Updates position of ship and draws it
-        ship.update(mouse.x, mouse.y, keyPresses);
+        ship.update(mouse.x, mouse.y, keyPresses, dt);
         ship.draw();
 
         shield.update(ship.x, ship.y, ship.angle, false);
@@ -112,13 +158,14 @@ function gameLoop() {
         if (enemyArr.length === 0) {
             enemyArr = (nextLvl(enemyArr, ship, level)).slice(0);
             level++;
+            particleArr = [];
         }
         
         // Updates player's bullet
         if (bulletArr.length !== 0) {
             loop4:
             for (let i = 0; i < bulletArr.length; i++) {
-                bulletArr[i].update();
+                bulletArr[i].update(dt);
                 bulletArr[i].draw();
                 
                 for (let j = 0; j < enemyArr.length; j++) {
@@ -137,7 +184,7 @@ function gameLoop() {
         // Updates square enemy bullets
         if (squareBullArr.length !== 0) {
             for (let j = 0; j < squareBullArr.length; j++) {
-                squareBullArr[j].update();
+                squareBullArr[j].update(dt);
                 squareBullArr[j].draw();
                 
                 if (collision(squareBullArr[j].x, squareBullArr[j].y, squareBullArr[j].radius, 'bullet', ship.x, ship.y, ship.radius, ship.name, shield.angle)) {
@@ -157,7 +204,7 @@ function gameLoop() {
         // Updates pentagon enemy bullets
         if (pentBullArr.length !== 0) {
             for (let k = 0; k < pentBullArr.length; k++) {
-                pentBullArr[k].update();
+                pentBullArr[k].update(dt);
                 pentBullArr[k].draw();
 
                 if (collision(pentBullArr[k].x, pentBullArr[k].y, pentBullArr[k].radius, 'bullet', ship.x, ship.y, ship.radius, ship.name, shield.angle)) {
@@ -177,7 +224,7 @@ function gameLoop() {
         // Updates octagon enemy bullets
         if (octBullArr.length !== 0) {
             for (let l = 0; l < octBullArr.length; l++) {
-                octBullArr[l].update();
+                octBullArr[l].update(dt);
                 octBullArr[l].draw();
 
                 if (collision(octBullArr[l].x, octBullArr[l].y, octBullArr[l].radius, 'bullet', ship.x, ship.y, ship.radius, ship.name, shield.angle)) {
@@ -199,7 +246,7 @@ function gameLoop() {
         for (let p = 0; p < enemyArr.length; p++) {
 
             // Updates enemy position
-            enemyArr[p].update(ship.x, ship.y);
+            enemyArr[p].update(ship.x, ship.y, dt);
             enemyArr[p].draw();
 
             // Handles enemy firing
@@ -232,21 +279,6 @@ function gameLoop() {
                 enemyArr = [];
                 enemyArr = nextLvl(enemyArr, ship, level);
             } 
-        }
-    }
-    
-    // Updates explosion particles if there are any
-    if (particleArr.length !== 0) {
-        loop2:
-        for (let k = 0; k < particleArr.length; k++) {
-            particleArr[k].update();
-
-            if (Math.round(particleArr[k].velX) === 0 && Math.round(particleArr[k].velY) === 0) {
-                particleArr.splice(k, 1);
-                break loop2;
-            }
-
-            particleArr[k].draw();
         }
     }
 

@@ -12,13 +12,13 @@ export default function nextLvl(arr, ship, lvl) {
     for (let i = 0; i < (8 + Math.round(lvl * 0.1)); i++) {
         const rand = Math.random() * 99 + 1; // Generates number 1-100
         if (rand <= 50) 
-            arr.push(new EnemySquare(ship.radius, 0.02 + (lvl * 0.001)));
+            arr.push(new EnemySquare(ship.radius, 150 * .02 + (lvl * 0.001)));
         else if (rand <= 80)
-            arr.push(new EnemyCircle(ship.radius, 0.05 + (lvl * 0.001)));
+            arr.push(new EnemyCircle(ship.radius, 150 * .05 + (lvl * 0.001)));
         else if (rand <= 95)
-            arr.push(new EnemyPent(ship.radius, 0.008 + (lvl * 0.001)));
+            arr.push(new EnemyPent(ship.radius, 150 *.008 + (lvl * 0.001)));
         else 
-            arr.push(new EnemyOct(ship.radius, 0.005 + (lvl * 0.001)));
+            arr.push(new EnemyOct(ship.radius, 150 * .005 + (lvl * 0.001)));
     }
     return arr;
 }

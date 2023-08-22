@@ -12,10 +12,10 @@ export default class EnemyOct {
         this.fireRate = Math.round(Math.random() * (1800 - 1500) + 1500);
     }
 
-    update(shipX, shipY) {
+    update(shipX, shipY, dt) {
         this.angle = Math.atan2(this.y - shipY, shipX - this.x);
-        this.x += Math.cos(this.angle) * this.radius * this.speed;
-        this.y -= Math.sin(this.angle) * this.radius * this.speed;
+        this.x += Math.cos(this.angle) * this.radius * this.speed * dt;
+        this.y -= Math.sin(this.angle) * this.radius * this.speed * dt;
         this.pointOne = []
         this.time++;
         this.name = "octagon";
@@ -48,7 +48,7 @@ export default class EnemyOct {
                 arr.push(
                     new Bullet(
                         this.x + Math.cos(this.angle + ptDis * j) * this.radius, 
-                        this.y - Math.sin(this.angle + ptDis * j) * this.radius, this.angle + ptDis * j, 1.5, 'lightGreen', 12
+                        this.y - Math.sin(this.angle + ptDis * j) * this.radius, this.angle + ptDis * j, 125 * 1.5, 'lightGreen', 12
                     )
                 );
             }
