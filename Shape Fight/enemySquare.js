@@ -15,10 +15,10 @@ export default class EnemySquare {
         this.hp = 2;
     }
 
-    update(shipX, shipY) {
+    update(shipX, shipY, dt) {
         this.angle = Math.atan2(this.y - shipY, shipX - this.x);
-        this.x += Math.cos(this.angle) * this.radius * this.speed;
-        this.y -= Math.sin(this.angle) * this.radius * this.speed;
+        this.x += Math.cos(this.angle) * this.radius * this.speed * dt;
+        this.y -= Math.sin(this.angle) * this.radius * this.speed * dt;
         this.time++;
     }
 
@@ -29,7 +29,7 @@ export default class EnemySquare {
 
     fire(arr) {
         if (this.time % this.fireRate === 0) 
-            arr.push(new Bullet(this.x, this.y, this.angle, 2, 'lightGreen', 5));
+            arr.push(new Bullet(this.x, this.y, this.angle, 125 * 2, 'lightGreen', 5));
         return arr;
     }
 }

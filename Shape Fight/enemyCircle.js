@@ -12,10 +12,10 @@ export default class EnemyCircle {
         this.hp = 3;
     }
 
-    update(shipX, shipY) {
+    update(shipX, shipY, dt) {
         this.angle = Math.atan2(this.y - shipY, shipX - this.x);
-        this.x += Math.cos(this.angle) * this.radius * this.speed;
-        this.y -= Math.sin(this.angle) * this.radius * this.speed;
+        this.x += Math.cos(this.angle) * this.radius * this.speed * dt;
+        this.y -= Math.sin(this.angle) * this.radius * this.speed * dt;
     }
 
     draw() {

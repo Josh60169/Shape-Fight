@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="shape.css">
     <script type="module" defer src="game.js"></script>
@@ -12,8 +14,9 @@
 <body>
     <div id="start-screen" style="display: block">
         <h1 id="title">SHAPE FIGHT</h1>
-        <button id="start-button">Start</button>
-        <button id="how-to-play">How To Play</button>
+        <button id="start-button" class="btn">Start</button>
+        <button id="how-to-play" class="btn">How To Play</button>
+        <button id="credits-btn" class="btn">Credits</button>
     </div>
 
     <div id="instructions" style="display: none">
@@ -30,7 +33,17 @@
 
             Good luck out there! Over and out.
         </p>
-        <button id="back-btn">Back</button>
+        <button id="back-btn" class="btn">Back</button>
+    </div>
+
+    <div id="credits-screen" style="display: none">
+        <p id="credits-txt">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <button id="credits-back-btn" class="btn">Back</button>
     </div>
 
     <canvas id="gameCanvas" style="display: none"></canvas>

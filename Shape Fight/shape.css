@@ -16,10 +16,6 @@
 }
 
 #start-button {
-    margin: 1%;
-    width: 14em;
-    height: 10em;
-    font-family: 'Press Start 2P', cursive;
     color: #FFF;
     background-color: #0c164f;
 }
@@ -30,10 +26,6 @@
 }
  
 #how-to-play {
-    margin: 1%;
-    width: 14em;
-    height: 10em;
-    font-family: 'Press Start 2P', cursive;
     color: #FFF;
     background-color: #ba1e68;
 }
@@ -49,10 +41,6 @@
 }
 
 #back-btn {
-    margin: 1%;
-    width: 14em;
-    height: 10em;
-    font-family: 'Press Start 2P', cursive;
     color: #FFF;
     background-color: #7649fe;
 }
@@ -63,7 +51,51 @@
 }
 
 #text-instructions {
-    
+    color: #FFF;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.btn {
+    margin: 1%;
+    width: 14em;
+    height: 10em;
+    font-family: 'Press Start 2P', cursive;
+}
+
+#credits-btn {
+    color: #CDCDCD;
+    background-color: #fffdd0;
+}
+
+#credits-btn:hover {
+    width: 15em;
+    height: 11em;
+}
+
+#credits-back-btn {
+    margin: 1%;
+    width: 14em;
+    height: 10em;
+    font-family: 'Press Start 2P', cursive;
+    color: #FFF;
+    background-color: #7649fe;
+}
+
+#credits-back-btn:hover {
+    width: 15em;
+    height: 11em;
+}
+
+#credits-screen {
+    text-align: center;
+    margin: 10%;
+}
+
+#credits-txt {
     color: #FFF;
     font-family: 'Press Start 2P', cursive;
     font-size: 14px;
