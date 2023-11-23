@@ -1,6 +1,8 @@
 import { canvas, ctx, canvWidth, canvHeight } from './gameCanv.js';
 import Bullet from './bullet.js';
 import spawnpoint from './spawnpoint.js';
+import {sound} from './sound.js';
+
 export default class EnemyOct {
     constructor(shipRad, speed) {
         [this.x, this.y] = spawnpoint(shipRad);
@@ -51,6 +53,8 @@ export default class EnemyOct {
                         this.y - Math.sin(this.angle + ptDis * j) * this.radius, this.angle + ptDis * j, 125 * 1.5, 'lightGreen', 12
                     )
                 );
+
+                sound('gameMusic/Octagon Firing.mp3');
             }
         }
         return arr;

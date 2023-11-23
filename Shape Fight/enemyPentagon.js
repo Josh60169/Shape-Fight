@@ -1,6 +1,7 @@
 import { canvas, ctx, canvWidth, canvHeight } from './gameCanv.js';
 import Bullet from './bullet.js';
 import spawnpoint from './spawnpoint.js';
+import {sound} from './sound.js';
 
 export default class EnemyPent {
     constructor(shipRad, speed) {
@@ -52,6 +53,8 @@ export default class EnemyPent {
                         this.y - Math.sin(this.angle + ptDis * j) * this.radius, this.angle, 125 * 1.5, 'lightGreen', 8
                     )
                 );
+                
+                sound('gameMusic/Pentagon Firing.mp3');
             }
         }
         return arr;

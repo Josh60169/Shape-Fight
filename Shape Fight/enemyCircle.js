@@ -9,7 +9,6 @@ export default class EnemyCircle {
         this.speed = speed;
         this.angle;
         this.name = 'circle' // Used for identification
-        this.hp = 3;
     }
 
     update(shipX, shipY, dt) {

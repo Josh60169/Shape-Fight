@@ -1,13 +1,18 @@
 import { canvWidth, canvHeight } from './gameCanv.js';
 export default function spawnpoint(shipRad) {
-    let rand = Math.round(Math.random() * 3 + 1);
+    let rand = Math.round(Math.random() * 4) + 1;
+
+    console.log(0 + 5 * shipRad, Math.random() * canvHeight);
+    console.log(canvWidth - 5 * shipRad, Math.random() * canvHeight);
+    console.log(Math.random() * canvWidth, 0 + 5 * shipRad);
+    console.log(Math.random() * canvWidth, canvHeight - 5 * shipRad);
 
     if (rand === 1)
-        return [canvWidth / 2 - (Math.random() * 2 * shipRad + 10 * shipRad), Math.random() * canvHeight]; // from start of x axis to 5-8 times the ship radius (left)
+        return [0 + 5 * shipRad, Math.random() * canvHeight]; // far left
     else if (rand === 2)
-        return [canvWidth / 2 + (Math.random() * 2 * shipRad + 10 * shipRad), Math.random() * canvHeight] // range from anywhere on the far right to 5 times the ship radius to the right
+        return [canvWidth - 5 * shipRad, Math.random() * canvHeight]; // far right
     else if (rand === 3)
-        return [Math.random() * canvWidth, canvHeight / 2 - (Math.random() * 10 * shipRad + 2 * shipRad)];
+        return [Math.random() * canvWidth, 0 + 5 * shipRad]; // far top
     else 
-        return [Math.random() * canvWidth, canvHeight / 2 + (Math.random() * 10 * shipRad + 2 * shipRad)];
+        return [Math.random() * canvWidth, canvHeight - 5 * shipRad]; // far bottom
 }

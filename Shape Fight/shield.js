@@ -4,7 +4,7 @@ export default class Shield {
         this.angle = shipAng;
         this.cx = shipX;
         this.cy = shipY;
-        this.color = 'blue';
+        this.color = 'red';
         this.rotSpeed = 0.1;
         this.radius = shipRad * 2.5;
         this.name = 'shield';

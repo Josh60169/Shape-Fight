@@ -12,8 +12,13 @@
     <title>Shape Fight!</title>
 </head>
 <body>
-    <div id="start-screen" style="display: block">
+    <div id="play-screen" style="display: block;">
+        <button id="play-btn">PLAY</button>
+    </div>
+
+    <div id="start-screen" style="display: none">
         <h1 id="title">SHAPE FIGHT</h1>
+        <h2 id="score-display"></h2>
         <button id="start-button" class="btn">Start</button>
         <button id="how-to-play" class="btn">How To Play</button>
         <button id="credits-btn" class="btn">Credits</button>
@@ -21,10 +26,11 @@
 
     <div id="instructions" style="display: none">
         <p id="text-instructions">
+            NOTE: PLEASE USE A MOUSE FOR BEST EXPERIENCE<br><br><br>
             Hello Player! <br><br>
 
             In this game, you control a triangular ship that moves around and shoots enemy shapes. <br><br>
-            Your objective is to last as long as you can by killing as many enemy shapes as you can without getting shot 3 times. <br><br><br>
+            Your objective is to last as long as you can by killing as many enemy shapes as you can without getting <br><br> shot 3 times. <br><br><br>
             
             - Use your mouse to point the ship in a given direction <br><br>
             - Use W to move foward <br><br>
