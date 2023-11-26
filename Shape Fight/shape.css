@@ -1,6 +1,7 @@
 #gameCanvas {
+    margin: auto;
     background-color: #000;
-    border: thin 10px lightgray;
+    border: thick solid lightgray;
 }
 
 #start-screen {

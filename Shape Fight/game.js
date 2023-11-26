@@ -49,8 +49,6 @@ function startGame() {
     score = 0;
     
     titleMusic = stopMusic(titleMusic);
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
     canvas.visible = true;
     resetFlag = false;
     menuFlag = false;
