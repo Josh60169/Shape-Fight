@@ -202,6 +202,9 @@ function gameLoop() {
     }
 
     if (ship.visible) {
+        ctx.beginPath();
+        ctx.strokeStyle = 'yellow';
+        ctx.strokeRect(-10, -10, 20, 20);
         // Updates position of ship and draws it
         ship.update(mouse.x, mouse.y, keyPresses, dt);
         ship.draw();

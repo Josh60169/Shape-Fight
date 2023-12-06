@@ -8,11 +8,11 @@ export default function spawnpoint(shipRad) {
     console.log(Math.random() * canvWidth, canvHeight - shipRad);
 
     if (rand === 1)
-        return [shipRad, Math.random() * canvHeight]; // far left
+        return [0, 0]; // far left
     else if (rand === 2)
-        return [canvWidth - shipRad, Math.random() * canvHeight]; // far right
+        return [0, 0]; // far right
     else if (rand === 3)
-        return [Math.random() * canvWidth, shipRad]; // far top
+        return [0, 0]; // far top
     else 
-        return [Math.random() * canvWidth, canvHeight - shipRad]; // far bottom
+        return [0, 0]; // far bottom
 }
