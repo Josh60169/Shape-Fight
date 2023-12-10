@@ -23,7 +23,7 @@ let squareBullArr = [];
 let pentBullArr = [];
 let octBullArr = [];
 let particleArr = [];
-let lastInterval = Date.now();
+let lastInterval;
 let dt;
 let fps = 1000 / 60; 
 let mainTheme;
@@ -56,6 +56,7 @@ function startGame() {
     toggleScreen('gameCanvas', true);
     mainTheme = music("gameMusic/main theme.mp3");
     enemyArr = (nextLvl(enemyArr, ship, level)).slice(0);
+    lastInterval = Date.now();
     gameLoop();
 }
 
@@ -377,9 +378,8 @@ function gameLoop() {
         }
 
         // Updates each enemy position and redraws each one
-        loop3:
-        for (let p = 0; p < enemyArr.length; p++) {
-
+        let p = 0;
+        while (p < enemyArr.length) {
             // Updates enemy position
             enemyArr[p].update(ship.x, ship.y, dt);
             enemyArr[p].draw();
@@ -399,10 +399,10 @@ function gameLoop() {
                     // kill the enemy
                     particleArr = destroy(enemyArr[p].x, enemyArr[p].y, 5, particleArr);
                     enemyArr.splice(p, 1);
+                    p--;
                 } else {
                     [enemyArr[p].x, enemyArr[p].y] = spawnpoint(ship.radius)
                 }
-                break loop3;
 
             } else if (collision(ship.x, ship.y, ship.radius, ship.name, enemyArr[p].x, enemyArr[p].y, enemyArr[p].radius, enemyArr[p].name, shield.angle)) {
                 // kill player
@@ -433,6 +433,8 @@ function gameLoop() {
                     }, 2000);
                 }
             } 
+
+            p++;
         }
     }
 
