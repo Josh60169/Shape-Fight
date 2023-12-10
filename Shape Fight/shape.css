@@ -125,10 +125,14 @@
 
 body {
     background-color: #1d1135;
+}
+
+#high-score {
+    color: #FFF;
     font-family: 'Press Start 2P', cursive;
 }
 
 @font-face {
     font-family: 'Press Start 2P';
     src: url('./PressStart2P-Regular.ttf') format('truetype');
-  }
+}

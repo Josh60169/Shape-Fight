@@ -3,7 +3,7 @@ export function gameOver(music) {
     music.currentTime = 0;
 }
 
-export function gameOverLoop(canvas, ctx, canvWidth, canvHeight, updateButtons, startGame, toggleScreen, music, resetFlag, menuFlag, titleMusic, mainTheme, menuBtn, restartBtn) {
+export function gameOverLoop(canvas, ctx, canvWidth, canvHeight, updateButtons, startGame, toggleScreen, music, resetFlag, menuFlag, titleMusic, menuBtn, restartBtn) {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvWidth, canvHeight);
 
@@ -16,23 +16,26 @@ export function gameOverLoop(canvas, ctx, canvWidth, canvHeight, updateButtons, 
     updateButtons();
 
     canvas.addEventListener('click', e => {
-        if (e.clientX >= menuBtn.x && e.clientX <= menuBtn.x + menuBtn.width && e.clientY >= menuBtn.y && e.clientY <= menuBtn.y + menuBtn.height)
+        let rect = canvas.getBoundingClientRect();
+        let xpos = e.clientX - rect.left;
+        let ypos = e.clientY - rect.top; 
+
+        if (xpos >= menuBtn.x && xpos <= menuBtn.x + menuBtn.width && ypos >= menuBtn.y && ypos <= menuBtn.y + menuBtn.height)
             menuFlag = true;
         else 
             menuFlag = false;
 
-        if (e.clientX >= restartBtn.x && e.clientX <= restartBtn.x + restartBtn.width && e.clientY >= restartBtn.y && e.clientY <= restartBtn.y + restartBtn.height)
+        if (xpos >= restartBtn.x && xpos <= restartBtn.x + restartBtn.width && ypos >= restartBtn.y && ypos <= restartBtn.y + restartBtn.height)
             resetFlag = true;
         else 
             resetFlag = false;
     });
 
     if (!resetFlag && !menuFlag)
-        requestAnimationFrame(() => gameOverLoop(canvas, ctx, canvWidth, canvHeight, updateButtons, startGame, toggleScreen, music, resetFlag, menuFlag, titleMusic, mainTheme, menuBtn, restartBtn));
-    else if (resetFlag) {
-        mainTheme = music("gameMusic/main theme.mp3");
+        requestAnimationFrame(() => gameOverLoop(canvas, ctx, canvWidth, canvHeight, updateButtons, startGame, toggleScreen, music, resetFlag, menuFlag, titleMusic, menuBtn, restartBtn));
+    else if (resetFlag) 
         startGame();
-    } else {
+    else {
         toggleScreen('start-screen', true);
         toggleScreen('gameCanvas', false);
         titleMusic = music("gameMusic/TitleScreenSong.mp3");

@@ -25,8 +25,8 @@ export default class Ship {
     update(mouseX, mouseY, keys, dt) {
         [this.x, this.y] = border(this.x, this.y, this.radius);
         // If the mouse is not on top of the ship radius, point towards mouse pointer
-        if (Math.abs(this.x - mouseX) > (this.radius - 6) && Math.abs(this.y - mouseY) > (this.radius - 6)) {
-            this.angle = Math.atan2(this.noseY - mouseY, mouseX - this.x) || 90 / 180 * Math.PI;
+        if (Math.abs(this.x - mouseX) > (this.radius / 2) && Math.abs(this.y - mouseY) > (this.radius / 2)) {
+            this.angle = Math.atan2(this.y - mouseY, mouseX - this.x) || 90 / 180 * Math.PI;
         }
         
         if (keys['w']) {
@@ -92,13 +92,24 @@ export default class Ship {
     }
 
     drawLives(lives) {
+        ctx.beginPath();
+
+        ctx.textAlign = "right";
+        ctx.textBaseline = "top";
+        ctx.fillStyle = '#FFF';
+        ctx.fillText('Lives: ', canvWidth * 0.85, 30);
+
         let initX = this.x;
-        for (let i = 0; i < lives; i++) {
+        let initNoseX = this.noseX;
+
+        for (let i = 0; i < lives - 1; i++) {
             this.draw();
-            this.x += this.radius * 1.2;
+            this.x += this.radius * 2;
+            this.noseX += this.radius * 2;
         }
 
         this.x = initX;
+        this.noseX = initNoseX;
     }
 
     fireSound(sound) {

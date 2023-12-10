@@ -15,7 +15,7 @@ import Button from './button.js';
 let lives = 3;
 let level = 1;
 let ship = new Ship(canvWidth / 2, canvHeight / 2, "lightBlue");
-let shipLives = new Ship(canvWidth / 2, canvHeight / 2, "lightBlue");
+let shipLives = new Ship(canvWidth * 0.875, 35, "lightBlue");
 let shield = new Shield(ship.x, ship.y, ship.radius, ship.angle)
 let bulletArr = [];
 let enemyArr = [];
@@ -41,6 +41,9 @@ let highScore = localStorage.getItem('highScore');
 
 if (highScore === null) 
     highScore = 0;
+
+let titleScore = document.querySelector('#high-score');
+titleScore.innerText = `Score: ${highScore}`;
 
 function startGame() {
     lives = 3;
@@ -126,12 +129,13 @@ document.body.addEventListener('keyup', e => {
 
 // Updates Mouse Position
 document.body.addEventListener('mousemove', e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+    let rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
 });
 
 // Fires bullet when left mouse button is clicked
-canvas.addEventListener('click', e => {
+canvas.addEventListener('click', () => {
     if (ship.visible) {
         bulletArr.push(new Bullet(ship.noseX, ship.noseY, ship.angle, 125 * 5, 'orange', 5));
         sound("gameMusic/Ship Gun.mp3");
@@ -157,6 +161,7 @@ function updateScore(score, highScore) {
     ctx.textBaseline = "top";
     ctx.fillText(`High Score: ${highScore}`, 30, 30);
     ctx.fillText(`Score: ${score}`, 30, 50);
+    titleScore.innerText = `Score: ${highScore}`;
 }
 
 function updateButtons() {
@@ -178,6 +183,9 @@ function gameLoop() {
         localStorage.setItem(SaveKeyHighScore, highScore);
     }
     updateScore(score, highScore);
+
+    // draw the lives the player has left
+    shipLives.drawLives(lives);
 
     // Calculate delta time
     [lastInterval, dt] = deltaTime(lastInterval);
@@ -203,16 +211,11 @@ function gameLoop() {
     }
 
     if (ship.visible) {
-        ctx.beginPath();
-        ctx.strokeStyle = 'yellow';
-        ctx.strokeRect(-10, -10, 20, 20);
         // Updates position of ship and draws it
         ship.update(mouse.x, mouse.y, keyPresses, dt);
         ship.draw();
         fire.drawFire(ship, fps);
         ship.fireSound(shipEngine);
-
-        shipLives.drawLives();
 
         shield.update(ship.x, ship.y, ship.angle, false);
         shield.draw();
@@ -452,5 +455,5 @@ function gameLoop() {
     if (lives !== 0 || particleArr.length !== 0)
         requestAnimationFrame(gameLoop);
     else 
-        gameOverLoop(canvas, ctx, canvWidth, canvHeight, updateButtons, startGame, toggleScreen, music, resetFlag, menuFlag, titleMusic, mainTheme, menuBtn, restartBtn);
+        gameOverLoop(canvas, ctx, canvWidth, canvHeight, updateButtons, startGame, toggleScreen, music, resetFlag, menuFlag, titleMusic, menuBtn, restartBtn);
 }

@@ -24,7 +24,11 @@ export default class Button {
 
     listen() {
         canvas.addEventListener('mousemove', e => {
-            if (e.clientX >= this.x && e.clientX <= this.x + this.width && e.clientY >= this.y && e.clientY <= this.y + this.height) {
+            let rect = canvas.getBoundingClientRect();
+            let xpos = e.clientX - rect.left;
+            let ypos = e.clientY - rect.top;
+
+            if (xpos >= this.x && xpos <= this.x + this.width && ypos >= this.y && ypos <= this.y + this.height) {
                 this.fontSize = 20;
                 this.width = this.initWidth * 1.5;
                 this.height = this.initHeight * 1.5;
