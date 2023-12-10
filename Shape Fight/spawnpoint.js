@@ -2,11 +2,6 @@ import { canvWidth, canvHeight } from './gameCanv.js';
 export default function spawnpoint(shipRad) {
     let rand = Math.round(Math.random() * 4) + 1;
 
-    // console.log(Date.now);
-    // console.log(canvWidth - shipRad, Math.random() * canvHeight);
-    // console.log(Math.random() * canvWidth, shipRad);
-    // console.log(Math.random() * canvWidth, canvHeight - shipRad);
-
     if (rand === 1)
         return [shipRad, Math.random() * canvHeight]; // far left
     else if (rand === 2)
