@@ -1,3 +1,4 @@
+import titleTheme from '../gameMusic/TitleScreenSong.mp3';
 export function gameOver(music) {
     music.pause();
     music.currentTime = 0;
@@ -38,6 +39,6 @@ export function gameOverLoop(canvas, ctx, canvWidth, canvHeight, updateButtons, 
     else {
         toggleScreen('start-screen', true);
         toggleScreen('gameCanvas', false);
-        titleMusic = music("gameMusic/TitleScreenSong.mp3");
+        titleMusic = music(titleTheme);
     }
 }
